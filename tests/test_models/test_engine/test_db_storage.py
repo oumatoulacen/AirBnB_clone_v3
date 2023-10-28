@@ -106,4 +106,3 @@ class TestFileStorage(unittest.TestCase):
         models.storage.save()
         new_count = models.storage.count(User)
         self.assertEqual(count, new_count + 1)
-        
