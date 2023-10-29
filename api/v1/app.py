@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ AirBnB v3 flask Api v1 entrypoint """
-from flask import Flask, make_response
+from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 import json
 from api.v1.views import app_views
@@ -37,6 +37,14 @@ def teardown(err):
 #     response.headers['Content-Type'] = 'application/json'
 #     return response
 
+@app.errorhandler(404)
+def not_found(err):
+    """_summary_
+
+    Args:
+        err (_type_): _description_
+    """
+    jsonify({"error": "Not found"})
 
 if __name__ == "__main__":
     """api entrypoint"""
