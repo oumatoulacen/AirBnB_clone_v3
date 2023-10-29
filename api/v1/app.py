@@ -44,7 +44,7 @@ def not_found(err):
     Args:
         err (_type_): _description_
     """
-    jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"})
 
 if __name__ == "__main__":
     """api entrypoint"""
