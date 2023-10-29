@@ -39,12 +39,10 @@ def teardown(err):
 
 @app.errorhandler(404)
 def not_found(err):
-    """_summary_
-
-    Args:
-        err (_type_): _description_
+    """ returns a 404 error
     """
     return jsonify({"error": "Not found"})
+
 
 if __name__ == "__main__":
     """api entrypoint"""
