@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''start API'''
+'''start API application'''
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
