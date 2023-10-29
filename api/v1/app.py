@@ -16,8 +16,9 @@ def close_storage(exception):
     '''close the storage'''
     storage.close()
 
+host = environ.get('HBNB_API_HOST', '0.0.0.0')
+port = environ.get('HBNB_API_PORT', 5000)
 
 if __name__ == "__main__":
-    host = environ.get('HBNB_API_HOST', '0.0.0.0')
-    port = environ.get('HBNB_API_PORT', 5000)
+    """api entrypoint"""
     app.run(debug=True, port=port, host=host, threaded=True)
