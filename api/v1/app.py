@@ -1,42 +1,42 @@
 #!/usr/bin/python3
-""" AirBnB v3 flask Api v1 entrypoint """
-from flask import Flask, make_response
-from flask_cors import CORS
-import json
+"""Endpoint (route) will be to return the status of your API"""
+import os
+from flask import Flask
+from models import storage
 from api.v1.views import app_views
-from os import getenv
 
+# creating a Flask app
 app = Flask(__name__)
-app.url_map.strict_slashes = False
-app.register_blueprint(app_views)
-host = getenv("HBNB_API_HOST")
-port = getenv("HBNB_API_PORT")
-CORS(app)
-#resources={r"/*": {"origins": "0.0.0.0"}}
+
+app.register_blueprint(app_views, url_prefix="/api/v1")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return {"error": "Not found"}, 404
+
+
+@app.errorhandler(400)
+def page_not_found(e):
+    message = e.description
+    return message, 400
+
 
 @app.teardown_appcontext
-def teardown(err):
-    """api teardown"""
-    from models import storage
+def close(ctx):
     storage.close()
 
 
-# @app.errorhandler(404)
-# def not_found(err):
-#     """ 404 Error
-#     ---
-#     responses:
-#       404:
-#         description: a resource was not found
-#     """
-#     res = {'error': "Not found"}
-#     response = make_response(json.dumps(res), 404)
-#     response.headers['Content-Type'] = 'application/json'
-#     return response
+if os.getenv("HBNB_API_HOST"):
+    host = os.getenv("HBNB_API_HOST")
+else:
+    host = "0.0.0.0"
+
+if os.getenv("HBNB_API_PORT"):
+    port = int(os.getenv("HBNB_API_PORT"))
+else:
+    port = 5000
 
 
 if __name__ == "__main__":
-    """api entrypoint"""
-    host = "0.0.0.0" if host is None else host
-    port = "5000" if port is None else port
     app.run(host=host, port=port, threaded=True)
