@@ -7,6 +7,7 @@ from models.state import State
 from flask import make_response, abort, request, jsonify
 import json
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     ''' Retrieves the list of all State objects'''
@@ -34,6 +35,7 @@ def delete_state(state_id):
     storage.delete(state)
     storage.save()
     return jsonify({}), 200
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state(state_id):
