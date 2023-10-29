@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 ''' create views blueprints'''
 
 from flask import Blueprint
