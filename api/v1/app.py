@@ -11,6 +11,7 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 host = getenv("HBNB_API_HOST")
 port = getenv("HBNB_API_PORT")
+CORS(app)
 # cors = CORS(
 #     app,
 #     resources={r"/*": {"origins": "0.0.0.0"}}
@@ -21,7 +22,6 @@ port = getenv("HBNB_API_PORT")
 def teardown(err):
     """api teardown"""
     from models import storage
-
     storage.close()
 
 
