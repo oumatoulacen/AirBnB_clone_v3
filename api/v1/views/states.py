@@ -4,15 +4,15 @@
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-from flask import make_response, abort, request, jsonify
+from flask import abort, request, jsonify
 import json
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'])
 def get_states():
     ''' Retrieves the list of all State objects'''
     states = storage.all(State).values()
-    states_obj = [state.to_dict() for state in states]
+    states_obj = [state. to_dict() for state in states]
     return jsonify(states_obj), 200
 
 
@@ -37,8 +37,8 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create_state(state_id):
+@app_views.route('/states', methods=['POST'])
+def create_state():
     ''' create a State objects'''
     json_data = request.get_json()
     if not json_data:
