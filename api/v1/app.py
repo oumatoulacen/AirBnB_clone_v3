@@ -17,8 +17,9 @@ CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown(err):
-    from models import storage
     """api teardown"""
+    from models import storage
+
     storage.close()
 
 
