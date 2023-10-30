@@ -5,7 +5,6 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 from flask import abort, request, jsonify
-import json
 
 
 @app_views.route('/states', methods=['GET'])
@@ -64,5 +63,5 @@ def update_state(state_id):
     for key, value in data.items():
         if key not in ignore_keys:
             setattr(state, key, value)
-    state.save()
+    storage.save()
     return jsonify(state.to_dict()), 200
