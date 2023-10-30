@@ -8,12 +8,14 @@ from os import getenv
 
 
 app = Flask(__name__)
-
-
-app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
-CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-
+app.register_blueprint(app_views)
+# host = getenv("HBNB_API_HOST")
+# port = getenv("HBNB_API_PORT")
+cors = CORS(
+    app,
+    resources={r"/*": {"origins": "0.0.0.0"}}
+    )
 
 @app.teardown_appcontext
 def teardown(err):
