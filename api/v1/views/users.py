@@ -11,7 +11,7 @@ from flask import abort, request, jsonify
 def get_users():
     ''' Retrieves the list of all User objects'''
     users = storage.all(User).values()
-    users_obj = [user. to_dict() for user in users]
+    users_obj = [user.to_dict() for user in users]
     return jsonify(users_obj), 200
 
 
