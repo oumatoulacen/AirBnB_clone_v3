@@ -10,8 +10,8 @@ from os import getenv
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-# host = getenv("HBNB_API_HOST")
-# port = getenv("HBNB_API_PORT")
+host = getenv("HBNB_API_HOST")
+port = getenv("HBNB_API_PORT")
 cors = CORS(
     app,
     resources={r"/*": {"origins": "0.0.0.0"}}
@@ -40,9 +40,7 @@ def not_found(err):
 
 
 if __name__ == "__main__":
-    ''' endpoint for API'''
-    h = getenv("HBNB_API_HOST")
-    p = getenv("HBNB_API_PORT")
-    host = "0.0.0.0" if h is None else h
-    port = "5000" if p is None else p
+    """api entrypoint"""
+    host = "0.0.0.0" if host is None else host
+    port = "5000" if port is None else port
     app.run(host=host, port=port, threaded=True)
