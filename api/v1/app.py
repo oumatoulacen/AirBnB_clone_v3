@@ -2,7 +2,6 @@
 """ AirBnB v3 flask Api v1 entrypoint """
 from flask import Flask, jsonify
 from flask_cors import CORS
-from models import storage
 from api.v1.views import app_views
 from os import getenv
 
@@ -18,6 +17,7 @@ app.url_map.strict_slashes = False
 @app.teardown_appcontext
 def teardown(err):
     """api teardown"""
+    from models import storage
     storage.close()
 
 
