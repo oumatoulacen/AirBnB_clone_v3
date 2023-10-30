@@ -1,33 +1,42 @@
 #!/usr/bin/python3
 """ AirBnB v3 flask Api v1 entrypoint """
-from models import storage
-from flask import Flask, jsonify
+from flask import Flask, make_response
 from flask_cors import CORS
 import json
 from api.v1.views import app_views
 from os import getenv
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 host = getenv("HBNB_API_HOST")
 port = getenv("HBNB_API_PORT")
-app.url_map.strict_slashes = False
-
-cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+cors = CORS(
+    app,
+    resources={r"/*": {"origins": "0.0.0.0"}}
+    )
 
 
 @app.teardown_appcontext
 def teardown(err):
-    """teardown session"""
+    """api teardown"""
+    from models import storage
+
     storage.close()
 
 
 @app.errorhandler(404)
-def not_found_err(err):
-    """ create a 404 Error response:
+def not_found(err):
+    """ 404 Error
+    ---
+    responses:
+      404:
         description: a resource was not found
     """
-    return jsonify({"error": "Not found"}), 404
+    res = {'error': "Not found"}
+    response = make_response(json.dumps(res), 404)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
 if __name__ == "__main__":
