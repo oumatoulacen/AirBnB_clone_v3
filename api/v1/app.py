@@ -27,7 +27,7 @@ def not_found_err(err):
     """ create a 404 Error response:
         description: a resource was not found
     """
-    return jsonify(error="Not found"), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
