@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 ''' Create a new view for User objects'''
-
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -43,9 +42,9 @@ def create_user():
     if not json_data:
         return abort(400, "Not a JSON")
     if 'email' not in json_data:
-        abort(400, "Missing email")
+        return abort(400, "Missing email")
     if 'password' not in json_data:
-        abort(400, "Missing password")
+        return abort(400, "Missing password")
     user = User(**json_data)
     user.save()
     user_dict = user.to_dict()
