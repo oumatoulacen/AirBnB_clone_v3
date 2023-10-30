@@ -13,7 +13,7 @@ def get_cities(state_id):
     ''' Retrieves a cities objects of a state'''
     state = storage.get(State, state_id)
     if not state:
-        return abort(404)
+        abort(404)
     cities = state.cities
     cities_dict = [city.to_dict() for city in cities]
     return jsonify(cities_dict), 200
@@ -24,7 +24,7 @@ def get_city(city_id):
     ''' deletes a State objects from the database'''
     city = storage.get(City, city_id)
     if not city:
-        return abort(404)
+        abort(404)
     return jsonify(city.to_dict()), 200
 
 
@@ -33,7 +33,7 @@ def delete_city(city_id):
     ''' delete a city objects from the database'''
     city = storage.get(City, city_id)
     if not city:
-        return abort(404)
+        abort(404)
     storage.delete(city)
     storage.save()
     return jsonify({}), 200
@@ -44,12 +44,12 @@ def create_city(state_id):
     ''' create a city'''
     state = storage.get(State, state_id)
     if not state:
-        return abort(404)
+        abort(404)
     json_data = request.get_json()
     if not json_data:
         return abort(400, "Not a JSON")
     if 'name' not in json_data:
-        return abort(400, "Missing name")
+        abort(400, "Missing name")
     city = City(**json_data)
     city.state_id = state_id
     city.save()
@@ -62,10 +62,10 @@ def update_state(city_id):
     """ update a state"""
     city = storage.get(City, city_id)
     if not city:
-        return abort(404, "Not found")
+        abort(404, "Not found")
     data = request.get_json()
     if not data:
-        return abort(400, "Not a JSON")
+        abort(400, "Not a JSON")
     ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignore_keys:
