@@ -8,10 +8,10 @@ from models.city import City
 from flask import abort, request, jsonify
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'])
-def get_cities(state_id):
+@app_views.route('/states/<id>/cities', methods=['GET'])
+def get_cities(id):
     ''' Retrieves a cities objects of a state'''
-    state = storage.get(State, state_id)
+    state = storage.get(State, id)
     if not state:
         abort(404)
     cities = state.cities
@@ -39,10 +39,10 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
-def create_city(state_id):
+@app_views.route('/states/<s_id>/cities', methods=['POST'])
+def create_city(s_id):
     ''' create a city'''
-    state = storage.get(State, state_id)
+    state = storage.get(State, s_id)
     if not state:
         abort(404)
     json_data = request.get_json()
@@ -51,14 +51,14 @@ def create_city(state_id):
     if 'name' not in json_data:
         abort(400, "Missing name")
     city = City(**json_data)
-    city.state_id = state_id
+    city.state_id = s_id
     city.save()
     city_dict = city.to_dict()
     return jsonify(city_dict), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
-def update_state(city_id):
+def update_city(city_id):
     """ update a state"""
     city = storage.get(City, city_id)
     if not city:
