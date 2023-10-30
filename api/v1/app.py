@@ -33,5 +33,5 @@ def not_found_err(err):
 if __name__ == "__main__":
     """api entrypoint"""
     host = "0.0.0.0" if host is None else host
-    port = 5000 if port is None else port
+    port = "5000" if port is None else port
     app.run(host=host, port=port, threaded=True)
