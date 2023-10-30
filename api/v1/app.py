@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """ AirBnB v3 flask Api v1 entrypoint """
-from flask import Flask, jsonify
-from api.v1.views import app_views
+from flask import Flask, make_response
 from flask_cors import CORS
+import json
+from api.v1.views import app_views
 from os import getenv
+
 
 app = Flask(__name__)
 
@@ -22,9 +24,16 @@ def teardown(err):
 
 @app.errorhandler(404)
 def not_found(err):
-    """ returns a 404 error
+    """ 404 Error
+    ---
+    responses:
+      404:
+        description: a resource was not found
     """
-    return jsonify(error="Not found"), 404
+    res = {'error': "Not found"}
+    response = make_response(json.dumps(res), 404)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
 if __name__ == "__main__":
