@@ -92,8 +92,7 @@ class TestFileStorage(unittest.TestCase):
         '''test get for database storage'''
         # count = models.storage.(User)
         user = User()
-        models.storage.add(User)
-        models.storage.save()
+        user.save()
         user_get = models.storage.get(User, user.id)
         self.assertIs(user, user_get)
 
@@ -102,7 +101,6 @@ class TestFileStorage(unittest.TestCase):
         '''test count for database storage'''
         count = models.storage.count(User)
         user = User()
-        models.storage.add(User)
-        models.storage.save()
+        user.save()
         new_count = models.storage.count(User)
-        self.assertEqual(count, new_count + 1)
+        self.assertEqual(count + 1, new_count)
