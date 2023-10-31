@@ -6,7 +6,8 @@ from models.user import User
 from flask import abort, request, jsonify
 
 
-@app_views.route('/users', methods=['GET'])
+@app_views.route('/users', methods=['GET'],
+                 strict_slashes=False)
 def get_users():
     ''' Retrieves the list of all User objects'''
     users = storage.all(User).values()
@@ -35,7 +36,8 @@ def delete_user(user_id):
     return jsonify({}), 200
 
 
-@app_views.route('/users', methods=['POST'])
+@app_views.route('/users', methods=['POST'],
+                 strict_slashes=False)
 def create_user():
     ''' create a User objects'''
     json_data = request.get_json()

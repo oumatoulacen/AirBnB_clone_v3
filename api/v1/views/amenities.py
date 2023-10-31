@@ -7,7 +7,7 @@ from models.amenity import Amenity
 from flask import abort, request, jsonify
 
 
-@app_views.route('/amenities', methods=['GET'])
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_amenities():
     ''' Retrieves the list of all Amenity objects'''
     amenities = storage.all(Amenity).values()
@@ -36,7 +36,7 @@ def delete_amenity(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'])
+@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
     ''' create an Amenity objects'''
     json_data = request.get_json()

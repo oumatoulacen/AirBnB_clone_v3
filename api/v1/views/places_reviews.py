@@ -9,7 +9,8 @@ from models.user import User
 import json
 
 
-@app_views.route("/places/<id_place>/reviews", methods=["GET"])
+@app_views.route("/places/<id_place>/reviews", methods=["GET"],
+                 strict_slashes=False)
 def get_reviews(id_place):
     """retrieves all reviews by place id object"""
     place = storage.get(Place, id_place)
@@ -50,7 +51,8 @@ def delete_review(id):
     return response
 
 
-@app_views.route("/places/<id_place>/reviews", methods=["POST"])
+@app_views.route("/places/<id_place>/reviews", methods=["POST"],
+                 strict_slashes=False)
 def create_review(id_place):
     """inserts reviews if its valid json amd has correct key and state id"""
     missingIdMSG = "Missing user_id"

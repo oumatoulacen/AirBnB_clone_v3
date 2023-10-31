@@ -14,7 +14,8 @@ from os import getenv
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route("/places/<id_place>/amenities", methods=["GET"])
+@app_views.route("/places/<id_place>/amenities", methods=["GET"]
+                 , strict_slashes=False)
 def get_place_amenities(id_place):
     """retrieves all amenities of place id object"""
     place = storage.get(Place, id_place)
@@ -59,7 +60,8 @@ def delete_place_amenity(place_id, amenity_id):
     return response
 
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["POST"])
+@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["POST"],
+                 strict_slashes=False)
 def create_place_amenity(place_id, amenity_id):
     """links amenity to place"""
     place = storage.get(Place, place_id)

@@ -11,7 +11,8 @@ from models.amenity import Amenity
 import json
 
 
-@app_views.route("/cities/<id>/places", methods=["GET"])
+@app_views.route("/cities/<id>/places", methods=["GET"],
+                 strict_slashes=False)
 def get_places(id):
     """retrieves all places by city id object"""
     city = storage.get(City, id)
@@ -50,7 +51,8 @@ def delete_place(id):
     return response
 
 
-@app_views.route("/cities/<id>/places", methods=["POST"])
+@app_views.route("/cities/<id>/places", methods=["POST"],
+                 strict_slashes=False)
 def post_place(id):
     """inserts place if its valid json and has correct keys and city id"""
     missingMSG = "Missing name"
@@ -98,7 +100,8 @@ def put_place(place_id):
     return response
 
 
-@app_views.route('/places_search', methods=['POST'])
+@app_views.route('/places_search', methods=['POST'],
+                 strict_slashes=False)
 def places_search_enhanced():
     """endpoint to retrieves all PlaceObj using passed JSON"""
     abortMSG = "Not a JSON"
