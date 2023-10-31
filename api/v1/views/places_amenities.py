@@ -14,8 +14,8 @@ from os import getenv
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route("/places/<id_place>/amenities", methods=["GET"]
-                 , strict_slashes=False)
+@app_views.route("/places/<id_place>/amenities", methods=["GET"],
+                 strict_slashes=False)
 def get_place_amenities(id_place):
     """retrieves all amenities of place id object"""
     place = storage.get(Place, id_place)
