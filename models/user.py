@@ -8,6 +8,7 @@ import models
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Float
+from hashlib import md5
 
 
 class User(BaseModel, Base):
@@ -39,11 +40,10 @@ class User(BaseModel, Base):
                 User.__set_password(self, pwd)
         super().__init__(*args, **kwargs)
 
-    def __set_password(self, pwd):
-        """
-            custom setter: encrypts password to MD5
-        """
-        secure = hashlib.md5()
-        secure.update(pwd.encode("utf-8"))
-        secure_password = secure.hexdigest()
-        setattr(self, "password", secure_password)
+    def __setattr__(self, key, value):
+        """sets hashed password instead of plain text"""
+        if key == "password":
+            value = md5(
+                value.encode()
+                ).hexdigest()
+        super().__setattr__(key, value)
