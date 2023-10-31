@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """create views for api places"""
+
 from flask import abort, make_response, request
 from api.v1.views import app_views
 from models import storage

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ AirBnB v3 flask Api v1 entrypoint """
+
 from flask import Flask, make_response
 from flask_cors import CORS
 import json
