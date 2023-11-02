@@ -22,8 +22,8 @@ class User(BaseModel, Base):
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
 
-        places = relationship('Place', backref='user', cascade='all, delete')
-        reviews = relationship('Review', backref='user', cascade='all, delete')
+        places = relationship('Place', backref='user')
+        reviews = relationship('Review', backref='user')
     else:
         email = ''
         password = ''
@@ -34,16 +34,10 @@ class User(BaseModel, Base):
         """
             instantiates user object
         """
-        if kwargs:
-            pwd = kwargs.pop('password', None)
-            if pwd:
-                User.__set_password(self, pwd)
         super().__init__(*args, **kwargs)
 
-    def __setattr__(self, key, value):
-        """sets hashed password instead of plain text"""
-        if key == "password":
-            value = md5(
-                value.encode()
-                ).hexdigest()
-        super().__setattr__(key, value)
+    def __setattr__(self, name, value):
+        """sets a password with md5 encryption"""
+        if name == "password":
+            value = md5(value.encode()).hexdigest()
+        super().__setattr__(name, value)
