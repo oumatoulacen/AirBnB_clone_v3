@@ -1,47 +1,38 @@
 #!/usr/bin/python3
-""" AirBnB v3 flask Api v1 entrypoint """
-
-from flask import Flask, make_response
-from flask_cors import CORS
-import json
+""" Flask Application """
+from models import storage
 from api.v1.views import app_views
-from os import getenv
+from os import environ
+from flask import Flask, render_template, make_response, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-host = getenv("HBNB_API_HOST")
-port = getenv("HBNB_API_PORT")
-cors = CORS(
-    app,
-    resources={r"/*": {"origins": "0.0.0.0"}}
-    )
-
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 @app.teardown_appcontext
-def teardown(err):
-    """api teardown"""
-    from models import storage
-
+def close_db(error):
+    """ Close Storage """
     storage.close()
 
 
 @app.errorhandler(404)
-def not_found(err):
+def not_found(error):
     """ 404 Error
     ---
     responses:
       404:
         description: a resource was not found
     """
-    res = {'error': "Not found"}
-    response = make_response(json.dumps(res), 404)
-    response.headers['Content-Type'] = 'application/json'
-    return response
+    return make_response(jsonify({'error': "Not found"}), 404)
 
 
 if __name__ == "__main__":
-    """api entrypoint"""
-    host = "0.0.0.0" if host is None else host
-    port = "5000" if port is None else port
+    """ Main Function """
+    host = environ.get('HBNB_API_HOST')
+    port = environ.get('HBNB_API_PORT')
+    if not host:
+        host = '0.0.0.0'
+    if not port:
+        port = '5000'
     app.run(host=host, port=port, threaded=True)
